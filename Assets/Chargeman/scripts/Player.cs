@@ -6,9 +6,9 @@ public class PlayerTeleportMovement : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator animator;
 
-    
 
-   
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -17,8 +17,8 @@ public class PlayerTeleportMovement : MonoBehaviour
     }
 
 
-    public float moveSpeed = 5f;     
-    private Rigidbody2D rb;           
+    public float moveSpeed = 5f;
+    private Rigidbody2D rb;
     private Vector2 moveInput;
 
 
@@ -28,6 +28,7 @@ public class PlayerTeleportMovement : MonoBehaviour
     public Vector2 boxSize;
 
     private int chargeStack = 0;
+    private int hp = 0;
 
     private void Update()
     {
@@ -80,7 +81,7 @@ public class PlayerTeleportMovement : MonoBehaviour
 
 
         //Player Attack 플레이어 공격
-       
+
         if (curTime <= 0)
         {
             //공격
@@ -125,5 +126,13 @@ public class PlayerTeleportMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        Debug.Log($"Player Hp : {hp}");
+
+        if (hp <= 0) Debug.Log("Player Die");
     }
 }
