@@ -26,7 +26,6 @@ public class Boss : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        circleWarnAnimator = warning[0].GetComponent<Animator>();
     }
 
     private void Update()
@@ -42,13 +41,12 @@ public class Boss : MonoBehaviour
                 isDamaged = false;
             }
         }
-        /*
+        
         if (Input.GetKeyDown(KeyCode.P) && isDoing == false)
         {
-            Transform tr = warning[0].GetComponent<Transform>();
-            tr.localScale = new Vector3(0f, 0f, 1f);
+            Debug.Log("버튼 눌림");
             isDoing = true;
-            StartCoroutine(CircleWarning());
+            StartCoroutine(CircleWarn());
         }
 
         //if (isDoing) StartCoroutine(CircleWarning());
@@ -56,8 +54,12 @@ public class Boss : MonoBehaviour
         {
             isDone = false;
             isDoing = false;
-            StopCoroutine(CircleWarning());
-        }*/
+            StopCoroutine(CircleWarn());
+
+            Transform tr = warning[0].GetComponent<Transform>();
+            tr.localScale = new Vector3(0f, 0f, 1f);
+            Instantiate(pattern[0], this.transform);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -81,6 +83,14 @@ public class Boss : MonoBehaviour
 
     private IEnumerator CircleWarn()
     {
-        
+        Transform size = warning[0].GetComponent<Transform>();
+        while (size.localScale.x < 10.0f)
+        {
+            size.localScale += new Vector3(2f * Time.deltaTime, 2f * Time.deltaTime, 0f);
+            yield return null;
+            //yield return new WaitForSeconds(0.1f);
+        }
+        isDone = true;
+        yield return null;
     }
 }

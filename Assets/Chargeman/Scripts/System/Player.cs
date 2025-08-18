@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
        
         Charge();
         Move();
-        if (chargeStack <= 0) // 스택이 0이면 이동/공격 불가
+        if (chargeStack <= 0) // 스택이 0이면 대시/공격 불가
         {
             return;
         }
