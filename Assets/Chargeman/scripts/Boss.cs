@@ -81,6 +81,6 @@ public class Boss : MonoBehaviour
 
     private IEnumerator CircleWarn()
     {
-        
+        yield return null;
     }
 }
