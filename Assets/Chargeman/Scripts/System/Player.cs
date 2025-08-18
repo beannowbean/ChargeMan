@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerTeleportMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float teleportDistance = 2f;
     SpriteRenderer spriteRenderer;
