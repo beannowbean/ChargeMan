@@ -7,8 +7,6 @@ public class PlayerTeleportMovement : MonoBehaviour
     Animator animator;
 
 
-
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -32,31 +30,58 @@ public class PlayerTeleportMovement : MonoBehaviour
 
     private void Update()
     {
+       
+        Charge();
+        Move();
+        if (chargeStack <= 0) // 스택이 0이면 이동/공격 불가
+        {
+            return;
+        }
+        Dash();
+        Attack();
+        
+    }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position, boxSize);
+    }
 
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
+    private void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+    }
 
-        // X키로 Charge
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        Debug.Log($"Player Hp : {hp}");
+
+        if (hp <= 0) Debug.Log("Player Die");
+    }
+
+    private void Charge() // X키로 Charge
+    {
         if (Input.GetKeyDown(KeyCode.X))
         {
             chargeStack++; // 스택 증가
             animator.SetTrigger("isCharge"); // Charge 시 스프라이트 변경
             Debug.Log("Charge Stack: " + chargeStack);
         }
+    }
 
-        // 스택이 0이면 이동/공격 불가
-        if (chargeStack <= 0)
-        {
-            return;
-        }
-
-
-
+    private void Move() // 기본 이동
+    {
         //Direction Sprite 플레이어 좌우 애니메이션
         if (Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        moveInput.x = Input.GetAxisRaw("Horizontal");
+        moveInput.y = Input.GetAxisRaw("Vertical");
+    }
 
+    private void Dash()
+    {
         //Player character movement using teleport 캐릭터 방향키 순간이동
         Vector3 moveDirection = Vector3.zero;
 
@@ -75,13 +100,10 @@ public class PlayerTeleportMovement : MonoBehaviour
             chargeStack--; // 이동 시 스택 차감
             Debug.Log("Charge Stack: " + chargeStack);
         }
+    }
 
-
-
-
-
-        //Player Attack 플레이어 공격
-
+    private void Attack() // Player Attack 플레이어 공격
+    {
         if (curTime <= 0)
         {
             //공격
@@ -112,27 +134,6 @@ public class PlayerTeleportMovement : MonoBehaviour
         {
             curTime -= Time.deltaTime;
         }
-
-
-
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(pos.position, boxSize);
-    }
-
-    private void FixedUpdate()
-    {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
-    }
-
-    public void TakeDamage(int damage)
-    {
-        hp -= damage;
-        Debug.Log($"Player Hp : {hp}");
-
-        if (hp <= 0) Debug.Log("Player Die");
-    }
 }

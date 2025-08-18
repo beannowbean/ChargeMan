@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TakeDamage : MonoBehaviour
 {
+    [SerializeField] private int damage = 1;
+
     private Rigidbody2D rb;
 
     void Awake()
@@ -15,7 +17,7 @@ public class TakeDamage : MonoBehaviour
         PlayerTeleportMovement player = collision.GetComponent<PlayerTeleportMovement>();
         if (player is not null && player.CompareTag("Player"))
         {
-            player.TakeDamage(1); // 플레이어에게 1의 피해를 줌
+            player.TakeDamage(damage); // 플레이어에게 1의 피해를 줌
         }
     }
 }
