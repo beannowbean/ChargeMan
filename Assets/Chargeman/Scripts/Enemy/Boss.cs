@@ -16,6 +16,7 @@ public class Boss : MonoBehaviour
     private bool isDamaged = false;
     private bool isDone = false;
     private bool isDoing = false;
+    private int patternNum = 0;
     //private bool isTesting = false; //패턴 테스트를 위한 변수
 
     [SerializeField] private GameObject[] warning;
@@ -41,12 +42,20 @@ public class Boss : MonoBehaviour
                 isDamaged = false;
             }
         }
-        
+
         if (Input.GetKeyDown(KeyCode.P) && isDoing == false)
         {
             Debug.Log("버튼 눌림");
             isDoing = true;
+            patternNum = 0;
             StartCoroutine(CircleWarn());
+        }
+
+        if (Input.GetKeyDown(KeyCode.O) && isDoing == false)
+        {
+            isDoing = true;
+            patternNum = 1;
+            StartCoroutine(LineWarn());
         }
 
         //if (isDoing) StartCoroutine(CircleWarning());
@@ -54,11 +63,8 @@ public class Boss : MonoBehaviour
         {
             isDone = false;
             isDoing = false;
-            StopCoroutine(CircleWarn());
-
-            Transform tr = warning[0].GetComponent<Transform>();
-            tr.localScale = new Vector3(0f, 0f, 1f);
-            Instantiate(pattern[0], this.transform);
+            StopAllCoroutines();
+            Instantiate(pattern[patternNum], this.transform);
         }
     }
 
@@ -81,9 +87,11 @@ public class Boss : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //나중에 코루틴 통합할 수 있으면 할 예정
     private IEnumerator CircleWarn()
     {
         Transform size = warning[0].GetComponent<Transform>();
+        //size.localScale = new Vector3(0f, 0f, 1f);
         while (size.localScale.x < 10.0f)
         {
             size.localScale += new Vector3(2f * Time.deltaTime, 2f * Time.deltaTime, 0f);
@@ -91,6 +99,21 @@ public class Boss : MonoBehaviour
             //yield return new WaitForSeconds(0.1f);
         }
         isDone = true;
+        size.localScale = new Vector3(0f, 0f, 1f);
+        yield return null;
+    }
+
+    private IEnumerator LineWarn()
+    {
+        Transform size = warning[1].GetComponent<Transform>();
+        //size.localScale = new Vector3(0f, 1f, 1f);
+        while (size.localScale.x < 1.0f)
+        {
+            size.localScale += new Vector3(0.2f * Time.deltaTime, 0f, 0f);
+            yield return null;
+        }
+        isDone = true;
+        size.localScale = new Vector3(0f, 1f, 1f);
         yield return null;
     }
 }
