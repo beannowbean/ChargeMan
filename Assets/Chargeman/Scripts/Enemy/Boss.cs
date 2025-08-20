@@ -58,7 +58,7 @@ public class Boss : MonoBehaviour
             Debug.Log("버튼 눌림");
             isDoing = true;
             patternNum = 0; // 코루틴 안에서 patternNum 바꾸는 건 어떰
-            xSize = ySize = 10;
+            xSize = ySize = 4;
             StartCoroutine(CircleWarn(xSize, ySize,1));
         }
 
