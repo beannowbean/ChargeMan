@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
 
 
-    private float curTime;
+    private float curTime; // 공격 쿨타임 측정
     public float coolTime = 1f;
     public Transform pos;
     public Vector2 boxSize;
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 
     public void TakeDamage(int damage)
@@ -74,7 +74,8 @@ public class Player : MonoBehaviour
     private void Move() // 기본 이동
     {
         //Direction Sprite 플레이어 좌우 애니메이션
-        if (Input.GetButtonDown("Horizontal"))
+        //if (Input.GetButtonDown("Horizontal"))
+        if (Input.GetButton("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
@@ -96,6 +97,8 @@ public class Player : MonoBehaviour
 
         if (moveDirection != Vector3.zero)
         {
+            animator.SetTrigger("isRolling");
+
             transform.position += moveDirection * teleportDistance;
             chargeStack--; // 이동 시 스택 차감
             Debug.Log("Charge Stack: " + chargeStack);
