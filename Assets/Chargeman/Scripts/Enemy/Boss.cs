@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,12 +32,6 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject[] warning;
     [SerializeField] private GameObject[] pattern;
 
-    Vector2[] testList = new Vector2[5] {new Vector2(8, 5),
-                                         new Vector2(8, 6),
-                                         new Vector2(7, 5),
-                                         new Vector2(8, 7),
-                                         new Vector2(9, 5)};
-
     private void Awake()
     {
 
@@ -66,7 +59,7 @@ public class Boss : MonoBehaviour
             isDoing = true;
             patternNum = 0; // 코루틴 안에서 patternNum 바꾸는 건 어떰
             xSize = ySize = 4;
-            StartCoroutine(CircleWarn(xSize, ySize, 1));
+            StartCoroutine(CircleWarn(xSize, ySize,1));
         }
 
         if (Input.GetKeyDown(KeyCode.O) && isDoing == false) // 직선
@@ -84,20 +77,9 @@ public class Boss : MonoBehaviour
             patternNum = 2;
             xSize = 1;
             ySize = 1;
-            xPos = 8;
+            xPos = 8; 
             yPos = 5;
             StartCoroutine(PointWarn(xPos, yPos, 0.5f));
-        }
-
-        if (Input.GetKeyDown(KeyCode.U) && isDoing == false) // 좌표 연속
-        {
-            isDoing = true;
-            patternNum = 3;
-            xSize = 1;
-            ySize = 1;
-            xPos = 8;
-            yPos = 5;
-            StartCoroutine(TestPattern(5, testList, 0.5f, 0.5f));
         }
 
 
@@ -106,19 +88,19 @@ public class Boss : MonoBehaviour
         {
             isDone = false;
             isDoing = false;
-            //StopAllCoroutines();
+            StopAllCoroutines();
 
             if (patternNum == 2)
             {
-                GameObject Pattern = Instantiate(pattern[patternNum], new Vector3(xPos + xOffSet, yPos + yOffset, 0f), Quaternion.identity);
+                GameObject Pattern = Instantiate(pattern[patternNum], new Vector3(xPos+xOffSet, yPos+yOffset, 0f), Quaternion.identity);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
             }
             else
-            {
+            { 
                 GameObject Pattern = Instantiate(pattern[patternNum], this.transform);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
             }
-
+            
 
         }
     }
@@ -151,10 +133,11 @@ public class Boss : MonoBehaviour
         {
             size.localScale += new Vector3(patternDelay * 2f * Time.deltaTime, patternDelay * 2f * Time.deltaTime, 0f);
             yield return null;
+            //yield return new WaitForSeconds(0.1f);
         }
         isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
-        yield break;
+        yield return null;
     }
 
     private IEnumerator LineWarn(float x, float y, float patternDelay)
@@ -168,13 +151,13 @@ public class Boss : MonoBehaviour
         }
         isDone = true;
         size.localScale = new Vector3(0f, 1f, 1f);
-        yield break;
+        yield return null;
     }
 
     private IEnumerator PointWarn(float x, float y, float patternDelay)
     {
-        GameObject warnObject = Instantiate(warning[2]);
-        Transform size = warnObject.GetComponent<Transform>();
+
+        Transform size = warning[2].GetComponent<Transform>();
         size.position = new Vector3(x + xOffSet, y + yOffset, 0f);
         Debug.Log(x + "," + y);
         while (size.localScale.x < 1)
@@ -182,31 +165,8 @@ public class Boss : MonoBehaviour
             size.localScale += new Vector3(patternDelay * 2f * Time.deltaTime, patternDelay * 2f * Time.deltaTime, 0f);
             yield return null;
         }
-        //isDone = true;
+        isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
-        Destroy(warnObject);
-
-        GameObject Pattern = Instantiate(pattern[2], new Vector3(xPos + xOffSet, yPos + yOffset, 0f), Quaternion.identity);
-        Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
-        yield break;
-    }
-
-    private IEnumerator TestPattern(int count, Vector2[] positions, float warnDelay, float patternTerm)
-    {
-        List<IEnumerator> enumerators = new List<IEnumerator>();
-
-        for (int i = 0; i < count; i++)
-        {
-            enumerators.Add(PointWarn(positions[i].x, positions[i].y, warnDelay));
-        }
-
-        for (int i = 0; i < count; i++)
-        {
-            StartCoroutine(enumerators[i]);
-            yield return new WaitForSeconds(patternTerm);
-        }
-
-        isDoing = false;
-        yield break;
+        yield return null;
     }
 }
