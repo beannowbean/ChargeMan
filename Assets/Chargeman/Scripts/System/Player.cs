@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-       
+
         Charge();
         Move();
         if (chargeStack <= 0) // 스택이 0이면 대시/공격 불가
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
         }
         Dash();
         Attack();
-        
+
     }
 
     private void OnDrawGizmos()
@@ -138,5 +139,4 @@ public class Player : MonoBehaviour
             curTime -= Time.deltaTime;
         }
     }
-
 }
