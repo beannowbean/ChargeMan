@@ -127,17 +127,20 @@ public class Boss : MonoBehaviour
     //나중에 코루틴 통합할 수 있으면 할 예정
     private IEnumerator CircleWarn(float x, float y, float patternDelay)
     {
+        float currentTime = 0;
+
         Transform size = warning[0].GetComponent<Transform>();
-        //size.localScale = new Vector3(0f, 0f, 1f);
-        while (size.localScale.x < x)
+        while (currentTime < 2)
         {
-            size.localScale += new Vector3(patternDelay * 2f * Time.deltaTime, patternDelay * 2f * Time.deltaTime, 0f);
+            //size.localScale += new Vector3(patternDelay * 2f * Time.deltaTime, patternDelay * 2f * Time.deltaTime, 0f);
+            currentTime += Time.deltaTime;
+            size.localScale = Vector3.Lerp(new Vector3(0f, 0f, 1f), new Vector3(x, y, 1f), currentTime / 2);
             yield return null;
             //yield return new WaitForSeconds(0.1f);
         }
         isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
-        yield return null;
+        yield break;
     }
 
     private IEnumerator LineWarn(float x, float y, float patternDelay)
