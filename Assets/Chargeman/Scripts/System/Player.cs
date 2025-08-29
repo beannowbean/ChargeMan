@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float teleportDistance = 2f;
+    public float teleportDistance = 1f;
     SpriteRenderer spriteRenderer;
     Animator animator;
 
@@ -26,19 +26,63 @@ public class Player : MonoBehaviour
     public Vector2 boxSize;
 
     private int chargeStack = 0;
-    private int hp = 0;
+    private int hp = 1;
+
+    // 행동 횟수 제한 변수: 일단 10으로 통일함
+    private int moveCount = 10;
+    private int attackCount = 10;
+    private int chargeCount = 10;
+
+    // 테스트 여부 
+    public bool isTesting  = true;
 
     private void Update()
     {
-       
-        Charge();
-        Move();
-        if (chargeStack <= 0) // 스택이 0이면 대시/공격 불가
+        
+        if (isTesting)
         {
-            return;
+            TestMode();
+            Charge();
+            Move();
+            if (chargeStack <= 0) // 스택이 0이면 대시/공격 불가
+            {
+                return;
+            }
+            Dash();
+            Attack();
         }
-        Dash();
-        Attack();
+        else // 기본 이동이 있는 거로 할지
+        {
+            TestMode();
+            Move();
+            if (moveCount <= 0) 
+            {
+                Debug.Log("이동 횟수 전부 소모");
+                return;
+            }
+            else
+            {
+                Dash();
+            }
+            if (attackCount <= 0)
+            {
+                Debug.Log("공격 횟수 전부 소모");
+                return;
+            }
+            else
+            {
+                Attack();
+            }
+            if (chargeCount <= 0)
+            {
+                Debug.Log("충전 횟수 전부 소모");
+                return;
+            }
+            else
+            {
+                Charge();
+            }
+        }
         
     }
 
@@ -58,7 +102,12 @@ public class Player : MonoBehaviour
         hp -= damage;
         Debug.Log($"Player Hp : {hp}");
 
-        if (hp <= 0) Debug.Log("Player Die");
+        if (hp <= 0) 
+        {
+            Debug.Log("Player Die");
+            // isGameOver변수 
+            // 테스트 모드에서는 안 끝나게
+        }
     }
 
     private void Charge() // X키로 Charge
@@ -68,11 +117,14 @@ public class Player : MonoBehaviour
             chargeStack++; // 스택 증가
             animator.SetTrigger("isCharge"); // Charge 시 스프라이트 변경
             Debug.Log("Charge Stack: " + chargeStack);
+            if (!isTesting) chargeCount--;
         }
     }
 
     private void Move() // 기본 이동
     {
+        if (!isTesting) moveSpeed = 1f;
+        else moveSpeed = 5f;
         //Direction Sprite 플레이어 좌우 애니메이션
         //if (Input.GetButtonDown("Horizontal"))
         if (Input.GetButton("Horizontal"))
@@ -95,14 +147,25 @@ public class Player : MonoBehaviour
         else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.LeftShift))
             moveDirection = Vector3.right;
 
+
         if (moveDirection != Vector3.zero)
         {
             animator.SetTrigger("isRolling");
-
-            transform.position += moveDirection * teleportDistance;
-            chargeStack--; // 이동 시 스택 차감
-            Debug.Log("Charge Stack: " + chargeStack);
+            if (!isTesting)
+            {
+                transform.position += moveDirection * teleportDistance/2 * (chargeStack + 1); // 충전 횟수에 비례하여 돌진 거리 증가
+                chargeStack = 0; 
+                Debug.Log("Move Stack: " + moveCount);
+                moveCount--;
+            }
+            else // 혹시 몰라서 기존 매커니즘도 남겨는 놓겠음
+            { 
+                transform.position += moveDirection * teleportDistance;
+                chargeStack--; // 이동 시 스택 차감
+                Debug.Log("Charge Stack: " + chargeStack);
+            }
         }
+        
     }
 
     private void Attack() // Player Attack 플레이어 공격
@@ -114,21 +177,33 @@ public class Player : MonoBehaviour
             {
 
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-
+                
                 foreach (Collider2D collider in collider2Ds)
                 {
                     Boss boss = collider.GetComponent<Boss>(); // BOSS 스크립트 찾기
 
-                    if (boss != null)
+                    if (isTesting)
                     {
-                        boss.TakeDamage(1); // HP 1 깎기
+                        if (boss != null)
+                        {
+                            boss.TakeDamage(1); // HP 1 깎기
+                        }
+                        chargeStack--; // 공격 시 스택 차감
+                    }
+                    else
+                    {
+                        if (boss != null)
+                        {
+                            boss.TakeDamage(1+chargeStack); 
+                        }
+                        chargeStack = 0;
+                        attackCount--;
+                        Debug.Log("Attack Stack: " + attackCount);
                     }
                 }
-
-
                 animator.SetTrigger("isAttack");
                 curTime = coolTime;
-                chargeStack--; // 공격 시 스택 차감
+                
                 Debug.Log("Charge Stack: " + chargeStack);
             }
 
@@ -139,4 +214,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void TestMode() // 키보드 1번 눌러서 이용 가능
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            isTesting = !isTesting;
+            Debug.Log("테스트 모드 변경. isTesting:" + isTesting);
+        }
+    }
 }
