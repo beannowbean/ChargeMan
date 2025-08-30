@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: df7784554459a424d860d40b83678b2e
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 60072b568d64c40a485e0fc55012dc9f, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Sub Graphs/Shapes/Segment.shadersubgraph
+  uploadId: 527755

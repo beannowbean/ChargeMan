@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b8edc14668a64ad409cfca526a8ff6d5
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/Prefabs/Dropdown Shape (Shapes).prefab
+  uploadId: 527755

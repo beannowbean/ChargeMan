@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 87f3662e6ec9dda47a7f58baffc1dbe4
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/Prefabs/SDF Canvas Test (Shapes).prefab
+  uploadId: 527755

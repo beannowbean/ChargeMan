@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7904fd3ff7c3135499c9b8e9c1da7215
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/02_MousePosition/_02_Mouse
+    Position.unity
+  uploadId: 527755

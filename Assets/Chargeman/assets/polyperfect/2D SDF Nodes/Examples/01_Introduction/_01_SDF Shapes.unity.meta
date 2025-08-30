@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9831b520c1ed80248831f40f33d92ebd
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/01_Introduction/_01_SDF Shapes.unity
+  uploadId: 527755

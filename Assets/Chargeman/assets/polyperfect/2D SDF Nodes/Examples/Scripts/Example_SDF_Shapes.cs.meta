@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 4b74e9837bd2b4d4489def41c1305f83
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/Scripts/Example_SDF_Shapes.cs
+  uploadId: 527755
