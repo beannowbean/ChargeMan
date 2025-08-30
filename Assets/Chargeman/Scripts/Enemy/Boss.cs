@@ -11,7 +11,6 @@ public class Boss : MonoBehaviour
     public Sprite BossDamaged;
     public float damagedTime = 0.2f;
     public Animator animator;
-    private Animator circleWarnAnimator;
 
     private SpriteRenderer spriteRenderer;
     private float damagedTimer = 0f;
