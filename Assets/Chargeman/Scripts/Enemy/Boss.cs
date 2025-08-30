@@ -90,8 +90,8 @@ public class Boss : MonoBehaviour
             patternNum = 3;
             xSize = 10;
             ySize = 10;
-            StartCoroutine(Laser(new Vector3(1f, 1f, 1f), new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.8f, 0.5f));
-            StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 0.8f));
+            StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
+            StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 0.6f));
         }
 
 
@@ -180,9 +180,10 @@ public class Boss : MonoBehaviour
     {
         float currentTime = 0;
         warning[3].GetComponent<Transform>().localScale = size;
-        warning[3].SetActive(true);
         Shape.UserProps shape = warning[3].GetComponent<Shape>().settings;
 
+        yield return new WaitForSeconds(0.3f);
+        warning[3].SetActive(true);
         while (currentTime < delay)
         {
             currentTime += Time.deltaTime;
@@ -197,22 +198,18 @@ public class Boss : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator Laser(Vector3 LaserSize, Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
+    private IEnumerator Laser( Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
     {
         float currentTime = 0;
         Transform tr = pattern[3].GetComponent<Transform>();
+        SpriteRenderer sr = pattern[3].GetComponent<SpriteRenderer>();
+        Animator ani = pattern[3].GetComponent<Animator>();
         tr.localRotation = Quaternion.Euler(startRotation);
 
         pattern[3].SetActive(true);
+        ani.SetBool("isActive", true);
 
-        while (currentTime < turnOnDelay)
-        {
-            currentTime += Time.deltaTime;
-            tr.localScale = Vector3.Lerp(new Vector3(1f, 0f, 1f), LaserSize, currentTime / turnOnDelay);
-            yield return null;
-        }
-
-        currentTime = 0;
+        yield return new WaitForSeconds(0.8f);
 
         while (currentTime < turnOffDelay)
         {
@@ -220,6 +217,8 @@ public class Boss : MonoBehaviour
             tr.localRotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(endRotation), currentTime / turnOffDelay);
             yield return null;
         }
+
+        ani.SetBool("isActive", false);
 
         pattern[3].SetActive(false);
 
