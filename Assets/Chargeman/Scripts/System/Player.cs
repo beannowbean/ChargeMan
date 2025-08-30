@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -6,15 +7,20 @@ public class Player : MonoBehaviour
     public float teleportDistance = 1f;
     SpriteRenderer spriteRenderer;
     Animator animator;
-
+    [SerializeField] GameObject MovePoint;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        Instantiate(MovePoint, transform.position, Quaternion.identity);
     }
 
+    private void Start()
+    {
+        
+    }
 
     public float moveSpeed = 5f;
     private Rigidbody2D rb;

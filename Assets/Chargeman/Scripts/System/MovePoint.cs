@@ -33,6 +33,7 @@ public class MovePoint : MonoBehaviour
 
         // 플레이어 앞 dist만큼 위치 + 회전(Atan2, 대각 정확)
         Vector3 targetPos = player.transform.position + (Vector3)(lastDir * dist);
+        targetPos.y -= 0.17f;
         transform.position = targetPos;
 
         float angle = Mathf.Atan2(lastDir.y, lastDir.x) * Mathf.Rad2Deg;
