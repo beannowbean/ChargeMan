@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Shapes2D;
+using System;
 
 public class Boss : MonoBehaviour
 {
@@ -84,6 +86,15 @@ public class Boss : MonoBehaviour
             StartCoroutine(PointWarn(xPos, yPos, 0.5f));
         }
 
+        if (Input.GetKeyDown(KeyCode.U) && isDoing == false)
+        {
+            isDoing = true;
+            patternNum = 3;
+            xSize = 5;
+            ySize = 5;
+            StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 2));
+        }
+
 
         //if (isDoing) StartCoroutine(CircleWarning());
         if (isDone)
@@ -94,15 +105,15 @@ public class Boss : MonoBehaviour
 
             if (patternNum == 2)
             {
-                GameObject Pattern = Instantiate(pattern[patternNum], new Vector3(xPos+xOffSet, yPos+yOffset, 0f), Quaternion.identity);
+                GameObject Pattern = Instantiate(pattern[patternNum], new Vector3(xPos + xOffSet, yPos + yOffset, 0f), Quaternion.identity);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
             }
             else
-            { 
+            {
                 GameObject Pattern = Instantiate(pattern[patternNum], this.transform);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
             }
-            
+
 
         }
     }
@@ -155,6 +166,27 @@ public class Boss : MonoBehaviour
         }
         isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
+        yield return null;
+    }
+
+    private IEnumerator ArcWarn(Vector3 size, float startAngleL, float endAngleL, float startAngleR, float endAngleR, float delay)
+    {
+        float currentTime = 0;
+        warning[3].GetComponent<Transform>().localScale = size;
+        warning[3].SetActive(true);
+        Shape.UserProps shape = warning[3].GetComponent<Shape>().settings;
+
+        while (currentTime < delay)
+        {
+            currentTime += Time.deltaTime;
+            shape.startAngle = Mathf.Lerp(startAngleL, endAngleL, currentTime / delay);
+            shape.endAngle = Mathf.Lerp(startAngleR, endAngleR, currentTime / delay);
+            yield return null;
+        }
+        isDone = true;
+        shape.startAngle = 40;
+        shape.endAngle = 41;
+        warning[3].SetActive(false);
         yield return null;
     }
 }
