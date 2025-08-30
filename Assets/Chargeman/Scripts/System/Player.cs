@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,7 +19,11 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-
+    
+    // 대시 관련
+    Vector3 moveDirection = Vector3.zero;
+    bool canDash = true;
+    float dashCooldown = 0.15f;
 
     private float curTime; // 공격 쿨타임 측정
     public float coolTime = 1f;
@@ -38,10 +43,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
+
+        TestMode();
         if (isTesting)
         {
-            TestMode();
             Charge();
             Move();
             if (chargeStack <= 0) // 스택이 0이면 대시/공격 불가
@@ -53,13 +58,13 @@ public class Player : MonoBehaviour
         }
         else // 기본 이동이 있는 거로 할지
         {
-            TestMode();
-            Move();
-            if (moveCount <= 0) 
+            if (moveCount <= 0 || !canDash) 
             {
-                Debug.Log("이동 횟수 전부 소모");
+                if (moveCount <= 0)
+                    Debug.Log("이동 횟수 전부 소모");
                 return;
             }
+            
             else
             {
                 Dash();
@@ -136,33 +141,48 @@ public class Player : MonoBehaviour
     private void Dash()
     {
         //Player character movement using teleport 캐릭터 방향키 순간이동
-        Vector3 moveDirection = Vector3.zero;
+        if (Input.GetButton("Horizontal"))
+            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        if (isTesting)
+        {   // 기존형태
+            if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftShift))
+                moveDirection = Vector3.up;
+            else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftShift))
+                moveDirection = Vector3.down;
+            else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.LeftShift))
+                moveDirection = Vector3.left;
+            else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.LeftShift))
+                moveDirection = Vector3.right;
 
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKeyDown(KeyCode.LeftShift))
-            moveDirection = Vector3.up;
-        else if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.LeftShift))
-            moveDirection = Vector3.down;
-        else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.LeftShift))
-            moveDirection = Vector3.left;
-        else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.LeftShift))
-            moveDirection = Vector3.right;
-
-
-        if (moveDirection != Vector3.zero)
-        {
-            animator.SetTrigger("isRolling");
-            if (!isTesting)
+            if (moveDirection != Vector3.zero)
             {
-                transform.position += moveDirection * teleportDistance/2 * (chargeStack + 1); // 충전 횟수에 비례하여 돌진 거리 증가
-                chargeStack = 0; 
-                Debug.Log("Move Stack: " + moveCount);
-                moveCount--;
-            }
-            else // 혹시 몰라서 기존 매커니즘도 남겨는 놓겠음
-            { 
+                animator.SetTrigger("isRolling");
                 transform.position += moveDirection * teleportDistance;
                 chargeStack--; // 이동 시 스택 차감
                 Debug.Log("Charge Stack: " + chargeStack);
+            }
+        }
+        else
+        {
+            // 4방/8방: 방향키 중 아무거나 막 눌린 프레임에서만 발동
+            if (Input.GetKeyDown(KeyCode.UpArrow) ||
+                Input.GetKeyDown(KeyCode.DownArrow) ||
+                Input.GetKeyDown(KeyCode.LeftArrow) ||
+                Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                // 현재 눌려있는 키 상태로 방향 계산 (대각 포함)
+                int x = 0, y = 0;
+                if (Input.GetKey(KeyCode.RightArrow)) x += 1;
+                if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
+                if (Input.GetKey(KeyCode.UpArrow)) y += 1;
+                if (Input.GetKey(KeyCode.DownArrow)) y -= 1;
+
+                Vector3 dir = new Vector3(x, y, 0f);
+                if (dir.sqrMagnitude > 0f)
+                {
+                    moveDirection = dir.normalized; // 대각선 속도 보정
+                    StartCoroutine(DashActivate());
+                }
             }
         }
         
@@ -221,5 +241,20 @@ public class Player : MonoBehaviour
             isTesting = !isTesting;
             Debug.Log("테스트 모드 변경. isTesting:" + isTesting);
         }
+    }
+    IEnumerator DelayTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
+
+    IEnumerator DashActivate()
+    {
+        canDash = false;
+        transform.position += moveDirection * teleportDistance / 2 * (chargeStack + 1); // 충전 횟수에 비례하여 돌진 거리 증가
+        chargeStack = 0;
+        Debug.Log("Move Stack: " + moveCount);
+        moveCount--;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
     }
 }

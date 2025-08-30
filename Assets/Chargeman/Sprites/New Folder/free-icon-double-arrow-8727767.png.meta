@@ -40,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -106,12 +106,12 @@ TextureImporter:
       name: free-icon-double-arrow-8727767_0
       rect:
         serializedVersion: 2
-        x: 13
+        x: 1
         y: 0
-        width: 287
+        width: 511
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -124,33 +124,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: free-icon-double-arrow-8727767_1
-      rect:
-        serializedVersion: 2
-        x: 212
-        y: 0
-        width: 287
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 39884dd67afe56140800000000000000
-      internalID: 4712436087494314131
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 69e7b0e3c1c58f642b818db4960131de
     internalID: 0
     vertices: []
     indices: 
