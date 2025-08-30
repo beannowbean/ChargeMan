@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 32f813ff89220ad4380f18e0d6231808
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/05_Color picker/Scripts/ColorPickerExample.cs
+  uploadId: 527755

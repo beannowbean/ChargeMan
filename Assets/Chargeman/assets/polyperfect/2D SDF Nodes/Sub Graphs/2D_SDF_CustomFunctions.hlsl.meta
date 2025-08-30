@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 96697443593a80f4191ad8696a059d3c
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Sub Graphs/2D_SDF_CustomFunctions.hlsl
+  uploadId: 527755

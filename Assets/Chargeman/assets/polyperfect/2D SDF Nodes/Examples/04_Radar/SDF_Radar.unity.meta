@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 655f37dfdda2db04e9806a77d7312949
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 233501
+  packageName: 2D SDF Nodes
+  packageVersion: 1.0
+  assetPath: Assets/polyperfect/2D SDF Nodes/Examples/04_Radar/SDF_Radar.unity
+  uploadId: 527755
