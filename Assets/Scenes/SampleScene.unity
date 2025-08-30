@@ -4894,6 +4894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportDistance: 2
+  MovePoint: {fileID: 0}
   moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: 0}
   coolTime: 1

@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     // 테스트 여부 
     public bool isTesting  = true;
 
-    public bool isKnockBacked = false;
+    private bool isKnockBacked = false;
     private void Update()
     {
 
