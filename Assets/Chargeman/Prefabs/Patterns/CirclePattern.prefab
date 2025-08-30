@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1911703217534510593}
   - component: {fileID: 7978529793958100251}
-  - component: {fileID: 8196907653803067778}
   - component: {fileID: 2064376441345936063}
+  - component: {fileID: 8770744672626883622}
   m_Layer: 0
   m_Name: CirclePattern
   m_TagString: Untagged
@@ -89,24 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8196907653803067778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4969410190243955118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca5532b85fa5e4b36857ec204447dfcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  destroyTime: 1
-  knockbackRate: 10
-  knockbackDir: {x: 1, y: 1}
-  effectId: 0
-  friction: 3
 --- !u!58 &2064376441345936063
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -143,3 +125,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &8770744672626883622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4969410190243955118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3311282f21b0184181f4677d555db05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  destroyTime: 1
+  knockbackRate: 35
+  knockbackDir: {x: 1, y: 0}
+  effectId: 0
+  friction: 5

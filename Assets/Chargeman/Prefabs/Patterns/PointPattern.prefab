@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2213387923840534735}
   - component: {fileID: 1493910071411292874}
-  - component: {fileID: 6811974807914279953}
-  - component: {fileID: 6605937299716275756}
   - component: {fileID: 6609527102742293053}
+  - component: {fileID: 5785965440776915763}
   m_Layer: 0
   m_Name: PointPattern
   m_TagString: Untagged
@@ -90,42 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6811974807914279953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5117425458729715019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca5532b85fa5e4b36857ec204447dfcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  destroyTime: 1
-  knockbackRate: 0
-  knockbackDir: {x: 0, y: 0}
-  effectId: 0
-  friction: 0
---- !u!114 &6605937299716275756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5117425458729715019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca5532b85fa5e4b36857ec204447dfcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  destroyTime: 1
-  knockbackRate: 100
-  knockbackDir: {x: 1, y: 1}
-  effectId: 0
-  friction: 0
 --- !u!58 &6609527102742293053
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,3 +125,21 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &5785965440776915763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117425458729715019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3311282f21b0184181f4677d555db05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  destroyTime: 1
+  knockbackRate: 0
+  knockbackDir: {x: 0, y: 0}
+  effectId: 0
+  friction: 0
