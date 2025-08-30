@@ -59,16 +59,18 @@ public class Boss : MonoBehaviour
             isDoing = true;
             patternNum = 0; // 코루틴 안에서 patternNum 바꾸는 건 어떰
             xSize = ySize = 4;
-            StartCoroutine(CircleWarn(xSize, ySize,1));
+            //StartCoroutine(CircleWarn(xSize, ySize,1));
+            StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(4f, 4f, 1f), 2));
         }
 
         if (Input.GetKeyDown(KeyCode.O) && isDoing == false) // 직선
         {
             isDoing = true;
             patternNum = 1;
-            xSize = 2;
+            xSize = 1;
             ySize = 1;
-            StartCoroutine(LineWarn(xSize, ySize, 1));
+            //StartCoroutine(LineWarn(xSize, ySize, 1));
+            StartCoroutine(ScaleUsingPattern(1, new Vector3(0f, 1f, 1f), new Vector3(1f, 1f, 1f), 1));
         }
 
         if (Input.GetKeyDown(KeyCode.I) && isDoing == false) // 좌표
@@ -124,37 +126,20 @@ public class Boss : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //나중에 코루틴 통합할 수 있으면 할 예정
-    private IEnumerator CircleWarn(float x, float y, float patternDelay)
+    private IEnumerator ScaleUsingPattern(int patternType, Vector3 startScale, Vector3 endScale, float delay)
     {
         float currentTime = 0;
 
-        Transform size = warning[0].GetComponent<Transform>();
-        while (currentTime < 2)
+        Transform size = warning[patternType].GetComponent<Transform>();
+        while (currentTime < delay)
         {
-            //size.localScale += new Vector3(patternDelay * 2f * Time.deltaTime, patternDelay * 2f * Time.deltaTime, 0f);
             currentTime += Time.deltaTime;
-            size.localScale = Vector3.Lerp(new Vector3(0f, 0f, 1f), new Vector3(x, y, 1f), currentTime / 2);
+            size.localScale = Vector3.Lerp(startScale, endScale, currentTime / delay);
             yield return null;
-            //yield return new WaitForSeconds(0.1f);
         }
         isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
         yield break;
-    }
-
-    private IEnumerator LineWarn(float x, float y, float patternDelay)
-    {
-        Transform size = warning[1].GetComponent<Transform>();
-        //size.localScale = new Vector3(0f, 1f, 1f);
-        while (size.localScale.x < x)
-        {
-            size.localScale += new Vector3(patternDelay * 0.2f * Time.deltaTime, 0f, 0f);
-            yield return null;
-        }
-        isDone = true;
-        size.localScale = new Vector3(0f, 1f, 1f);
-        yield return null;
     }
 
     private IEnumerator PointWarn(float x, float y, float patternDelay)

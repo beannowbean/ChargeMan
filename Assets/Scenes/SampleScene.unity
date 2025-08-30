@@ -4898,6 +4898,7 @@ MonoBehaviour:
   coolTime: 1
   pos: {fileID: 1112314181}
   boxSize: {x: 0, y: 0}
+  isTesting: 1
 --- !u!50 &1112314183
 Rigidbody2D:
   serializedVersion: 5
