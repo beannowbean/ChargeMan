@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     private int attackCount = 10;
     private int chargeCount = 10;
 
+    public int GetMaxCharge()
+    {
+        return chargeCount;
+    }
+
+
     // 테스트 여부 
     public bool isTesting  = true;
 
