@@ -56,8 +56,9 @@ public class Player : MonoBehaviour
             Dash();
             Attack();
         }
-        else // 기본 이동이 있는 거로 할지
+        else // 기본 이동이 있는 거로 할지 -> 있어야됨
         {
+            Move();
             if (moveCount <= 0 || !canDash) 
             {
                 if (moveCount <= 0)
@@ -164,26 +165,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // 4방/8방: 방향키 중 아무거나 막 눌린 프레임에서만 발동
-            if (Input.GetKeyDown(KeyCode.UpArrow) ||
-                Input.GetKeyDown(KeyCode.DownArrow) ||
-                Input.GetKeyDown(KeyCode.LeftArrow) ||
-                Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                // 현재 눌려있는 키 상태로 방향 계산 (대각 포함)
-                int x = 0, y = 0;
-                if (Input.GetKey(KeyCode.RightArrow)) x += 1;
-                if (Input.GetKey(KeyCode.LeftArrow)) x -= 1;
-                if (Input.GetKey(KeyCode.UpArrow)) y += 1;
-                if (Input.GetKey(KeyCode.DownArrow)) y -= 1;
-
-                Vector3 dir = new Vector3(x, y, 0f);
-                if (dir.sqrMagnitude > 0f)
-                {
-                    moveDirection = dir.normalized; // 대각선 속도 보정
-                    StartCoroutine(DashActivate());
-                }
-            }
+            moveDirection.x = Input.GetAxisRaw("Horizontal");
+            moveDirection.y = Input.GetAxisRaw("Vertical");
+            moveDirection = moveDirection.normalized;
+            if (Input.GetKeyDown(KeyCode.Space))
+                StartCoroutine(DashActivate());
         }
         
     }
