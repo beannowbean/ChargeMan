@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     
     // 대시 관련
-    Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     bool canDash = true;
     float dashCooldown = 0.15f;
 
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public Transform pos;
     public Vector2 boxSize;
 
-    private int chargeStack = 0;
+    public int chargeStack = 0;
     private int hp = 1;
 
     // 행동 횟수 제한 변수: 일단 10으로 통일함
