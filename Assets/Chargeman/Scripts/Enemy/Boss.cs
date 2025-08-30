@@ -58,9 +58,9 @@ public class Boss : MonoBehaviour
             Debug.Log("버튼 눌림");
             isDoing = true;
             patternNum = 0; // 코루틴 안에서 patternNum 바꾸는 건 어떰
-            xSize = ySize = 4;
+            xSize = ySize = 6;
             //StartCoroutine(CircleWarn(xSize, ySize,1));
-            StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(4f, 4f, 1f), 2));
+            StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(6f, 6f, 1f), 2));
         }
 
         if (Input.GetKeyDown(KeyCode.O) && isDoing == false) // 직선

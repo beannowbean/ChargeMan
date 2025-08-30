@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1911703217534510593}
   - component: {fileID: 7978529793958100251}
   - component: {fileID: 2064376441345936063}
-  - component: {fileID: 8770744672626883622}
+  - component: {fileID: 4656723603117128725}
   m_Layer: 0
   m_Name: CirclePattern
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -125,7 +125,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &8770744672626883622
+--- !u!114 &4656723603117128725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,12 +134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4969410190243955118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3311282f21b0184181f4677d555db05, type: 3}
+  m_Script: {fileID: 11500000, guid: 21812b07cd0f0da43b4bd88c24b519d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
   destroyTime: 1
-  knockbackRate: 35
-  knockbackDir: {x: 1, y: 0}
+  knockbackRate: 0
+  knockbackDir: {x: 0, y: 0}
   effectId: 0
-  friction: 5
+  friction: 0
