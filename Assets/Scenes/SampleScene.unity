@@ -4894,6 +4894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportDistance: 2
+  MovePoint: {fileID: 2714799929728775402, guid: da2bb8657d7904649b10a646aec1668b, type: 3}
   moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: 0}
   coolTime: 1
@@ -4901,6 +4902,7 @@ MonoBehaviour:
   boxSize: {x: 0, y: 0}
   chargeStack: 0
   isTesting: 1
+  isKnockBacked: 0
 --- !u!50 &1112314183
 Rigidbody2D:
   serializedVersion: 5
@@ -4927,7 +4929,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &1112314184
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
