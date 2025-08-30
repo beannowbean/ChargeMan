@@ -19,7 +19,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        
+        rb.linearDamping = 0f; // 감속 지우고
+        rb.AddForce(Vector2.right * 10f * rb.mass, ForceMode2D.Impulse);
+        Debug.Log($"[KB After] vel={rb.linearVelocity}");
     }
 
     public float moveSpeed = 5f;
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
     // 테스트 여부 
     public bool isTesting  = true;
 
+    public bool isKnockBacked = false;
     private void Update()
     {
 
@@ -106,7 +109,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
+        if(!isKnockBacked) rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 
     public void TakeDamage(int damage)
@@ -249,4 +252,27 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
+    public void OnHit(float knockbackRate, Vector2 knockbackDir, int effectId, float friction) // 넉백이랑 
+    {
+        if (knockbackRate > 0)
+        {
+            isKnockBacked = true;
+            Debug.Log("넉백");
+            rb.AddForce(knockbackDir.normalized * knockbackRate * rb.mass, ForceMode2D.Impulse);
+            rb.linearDamping = friction;
+            StartCoroutine(KnockBackOff());
+        }
+    }
+
+    IEnumerator KnockBackOff()
+    {
+
+        while (rb.linearVelocity.magnitude - 1 > 0)
+        {
+            yield return null;
+        }
+        isKnockBacked = false;
+    }
+    
 }

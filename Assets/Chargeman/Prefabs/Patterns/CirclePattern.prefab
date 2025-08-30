@@ -103,6 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   destroyTime: 1
+  knockbackRate: 10
+  knockbackDir: {x: 1, y: 1}
+  effectId: 0
+  friction: 3
 --- !u!58 &2064376441345936063
 CircleCollider2D:
   m_ObjectHideFlags: 0
