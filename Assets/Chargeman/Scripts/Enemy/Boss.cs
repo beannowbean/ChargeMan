@@ -35,7 +35,6 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
-
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -80,7 +79,7 @@ public class Boss : MonoBehaviour
             patternNum = 2;
             xSize = 1;
             ySize = 1;
-            xPos = 8; 
+            xPos = 8;
             yPos = 5;
             StartCoroutine(PointWarn(xPos, yPos, 0.5f));
         }
@@ -89,28 +88,37 @@ public class Boss : MonoBehaviour
         {
             isDoing = true;
             patternNum = 3;
-            xSize = 5;
-            ySize = 5;
-            StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 2));
+            xSize = 10;
+            ySize = 10;
+            StartCoroutine(Laser(new Vector3(1f, 1f, 1f), new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.8f, 0.5f));
+            StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 0.8f));
         }
 
 
         //if (isDoing) StartCoroutine(CircleWarning());
         if (isDone)
         {
-            isDone = false;
-            isDoing = false;
-            StopAllCoroutines();
+            //StopAllCoroutines();
 
             if (patternNum == 2)
             {
                 GameObject Pattern = Instantiate(pattern[patternNum], new Vector3(xPos + xOffSet, yPos + yOffset, 0f), Quaternion.identity);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
+                isDoing = false;
+                isDone = false;
+            }
+            else if (patternNum == 3)
+            {
+               // StartCoroutine(Laser());
+                isDoing = false;
+                isDone = false;
             }
             else
             {
                 GameObject Pattern = Instantiate(pattern[patternNum], this.transform);
                 Pattern.transform.localScale = new Vector3(xSize, ySize, 0);
+                isDoing = false;
+                isDone = false;
             }
 
 
@@ -165,7 +173,7 @@ public class Boss : MonoBehaviour
         }
         isDone = true;
         size.localScale = new Vector3(0f, 0f, 1f);
-        yield return null;
+        yield break;
     }
 
     private IEnumerator ArcWarn(Vector3 size, float startAngleL, float endAngleL, float startAngleR, float endAngleR, float delay)
@@ -186,6 +194,35 @@ public class Boss : MonoBehaviour
         shape.startAngle = 40;
         shape.endAngle = 41;
         warning[3].SetActive(false);
-        yield return null;
+        yield break;
+    }
+
+    private IEnumerator Laser(Vector3 LaserSize, Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
+    {
+        float currentTime = 0;
+        Transform tr = pattern[3].GetComponent<Transform>();
+        tr.localRotation = Quaternion.Euler(startRotation);
+
+        pattern[3].SetActive(true);
+
+        while (currentTime < turnOnDelay)
+        {
+            currentTime += Time.deltaTime;
+            tr.localScale = Vector3.Lerp(new Vector3(1f, 0f, 1f), LaserSize, currentTime / turnOnDelay);
+            yield return null;
+        }
+
+        currentTime = 0;
+
+        while (currentTime < turnOffDelay)
+        {
+            currentTime += Time.deltaTime;
+            tr.localRotation = Quaternion.Slerp(Quaternion.Euler(startRotation), Quaternion.Euler(endRotation), currentTime / turnOffDelay);
+            yield return null;
+        }
+
+        pattern[3].SetActive(false);
+
+        yield break;
     }
 }
