@@ -1,6 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class DefaultAttack : EnemyAttack // ¾Æ ±×·¡ ÀÌ¸ÀÀÌ¾ß
+public class DefaultAttack : EnemyAttack // ï¿½ï¿½ ï¿½×·ï¿½ ï¿½Ì¸ï¿½ï¿½Ì¾ï¿½
 {
     public override void OnTriggerEnter2D(Collider2D collision)
     {

@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class EnemyAttack : MonoBehaviour // 메서드랑 이름 헷갈릴 것 같은데 바꿔도 괜찮을지
 {
     [SerializeField] public int damage = 1;
+    //public int Damage { get { return damage; } set { damage = value; } }
     [SerializeField] public float destroyTime = 1.0f; //아마도 패턴에 따라 달라질 것
 
     [SerializeField] public float knockbackRate = 0;
