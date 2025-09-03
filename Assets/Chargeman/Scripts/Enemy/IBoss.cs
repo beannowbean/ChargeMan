@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IBoss
 {
     public int Hp { get; set; }
-    public float MoveSpeed { get; set; }
+    public int MaxHp { get; }
 
     public void TakeDamage(int damage);
 }
