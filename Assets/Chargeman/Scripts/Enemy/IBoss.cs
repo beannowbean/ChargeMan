@@ -6,4 +6,5 @@ public interface IBoss
     public int MaxHp { get; }
 
     public void TakeDamage(int damage);
+    public bool isTesting { get; }
 }

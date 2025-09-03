@@ -19,9 +19,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        rb.linearDamping = 0f; // 감속 지우고
-        rb.AddForce(Vector2.right * 10f * rb.mass, ForceMode2D.Impulse);
-        Debug.Log($"[KB After] vel={rb.linearVelocity}");
+        
     }
 
     public float moveSpeed = 5f;
@@ -201,8 +199,7 @@ public class Player : MonoBehaviour
                 
                 foreach (Collider2D collider in collider2Ds)
                 {
-                    Boss boss = collider.GetComponent<Boss>(); // BOSS 스크립트 찾기
-
+                    IBoss boss = collider.GetComponent<IBoss>(); // BOSS 스크립트 찾기
                     if (isTesting)
                     {
                         if (boss != null)

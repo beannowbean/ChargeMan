@@ -4851,6 +4851,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1085017638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3570898714541584220, guid: d63ba78d53010445097199dd05a70215, type: 3}
+  m_PrefabInstance: {fileID: 3632266235468984109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1112314177
 GameObject:
   m_ObjectHideFlags: 0
@@ -4957,13 +4962,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112314177}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.67, y: 1.72, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 603928131}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1769167031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1112314182
 MonoBehaviour:
@@ -5295,7 +5300,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1875643588}
+  - {fileID: 1811089407}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5395,8 +5400,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1769167031}
   - component: {fileID: 1769167030}
-  - component: {fileID: 1769167032}
   - component: {fileID: 1769167033}
+  - component: {fileID: 1769167034}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -5477,35 +5482,9 @@ Transform:
   - {fileID: 2075168697}
   - {fileID: 1591178617}
   - {fileID: 1777597725}
+  - {fileID: 1112314181}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1769167032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769167029}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67fd217486ae0445a0ab4d966e83e2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  normalSprite: {fileID: 0}
-  BossDamaged: {fileID: 0}
-  damagedTime: 0.2
-  animator: {fileID: 0}
-  warning:
-  - {fileID: 1408903176}
-  - {fileID: 171749374}
-  - {fileID: 2075168695}
-  - {fileID: 1591178616}
-  pattern:
-  - {fileID: 4969410190243955118, guid: d0669b756824d4340b40f6baa0b01a34, type: 3}
-  - {fileID: 4517310680735619818, guid: 631ca148114d4413999f070890471a3b, type: 3}
-  - {fileID: 5117425458729715019, guid: 4be7363e6bc801f4b8ea31648199960c, type: 3}
-  - {fileID: 1777597724}
 --- !u!114 &1769167033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5531,6 +5510,52 @@ MonoBehaviour:
   - {fileID: 4517310680735619818, guid: 631ca148114d4413999f070890471a3b, type: 3}
   - {fileID: 5117425458729715019, guid: 4be7363e6bc801f4b8ea31648199960c, type: 3}
   - {fileID: 1777597724}
+--- !u!61 &1769167034
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769167029}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1777597724
 GameObject:
   m_ObjectHideFlags: 0
@@ -5707,7 +5732,7 @@ MonoBehaviour:
   knockbackDir: {x: 0, y: 0}
   effectId: 0
   friction: 0
---- !u!21 &1875643588
+--- !u!21 &1811089407
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -5896,6 +5921,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1491503333}
     m_Modifications:
     - target: {fileID: 3314858643280839586, guid: d63ba78d53010445097199dd05a70215, type: 3}
+      propertyPath: bar
+      value: 
+      objectReference: {fileID: 1085017638}
+    - target: {fileID: 3314858643280839586, guid: d63ba78d53010445097199dd05a70215, type: 3}
       propertyPath: boss
       value: 
       objectReference: {fileID: 1769167029}
@@ -6003,7 +6032,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 828383766}
-  - {fileID: 1112314181}
   - {fileID: 1769167031}
   - {fileID: 1491503333}
   - {fileID: 765788378}

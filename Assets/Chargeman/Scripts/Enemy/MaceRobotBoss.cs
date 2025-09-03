@@ -29,6 +29,9 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
 
+    private bool istesting = true;
+    public bool isTesting { get { return istesting; } }
+
     void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -84,6 +87,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     {
         _hp -= damage;
         Debug.Log("Boss HP: " + _hp);
+        istesting = false;
 
         _animator.SetTrigger("isDamaged");
 

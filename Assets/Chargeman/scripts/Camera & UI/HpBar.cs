@@ -10,6 +10,8 @@ public class HpBar : MonoBehaviour
     private IBoss bossScript;
     private Image barImage;
 
+    private float time = 0;
+
     void Awake()
     {
         barImage = bar.GetComponent<Image>();
