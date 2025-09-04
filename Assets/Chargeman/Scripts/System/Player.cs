@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float teleportDistance = 1f;
+    public float teleportDistance = 5f;
     SpriteRenderer spriteRenderer;
     Animator animator;
     [SerializeField] GameObject MovePoint;
@@ -22,14 +22,14 @@ public class Player : MonoBehaviour
         
     }
 
-    public float moveSpeed = 5f;
+    public float moveSpeed = 0.5f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     
     // 대시 관련
     public Vector3 moveDirection = Vector3.zero;
-    bool canDash = true;
-    float dashCooldown = 0.15f;
+    bool isDashing = false;
+    float dashCooldown = 0.1f;
 
     private float curTime; // 공격 쿨타임 측정
     public float coolTime = 1f;
@@ -39,10 +39,10 @@ public class Player : MonoBehaviour
     public int chargeStack = 0;
     private int hp = 1;
 
-    // 행동 횟수 제한 변수: 일단 10으로 통일함
-    private int moveCount = 10;
-    private int attackCount = 10;
-    private int chargeCount = 10;
+    // 행동 횟수 제한 변수: 일단 99990으로 통일함
+    private int moveCount = 99990;
+    private int attackCount = 99990;
+    private int chargeCount = 99990;
 
     public int GetMaxCharge()
     {
@@ -69,19 +69,22 @@ public class Player : MonoBehaviour
             Dash();
             Attack();
         }
-        else // 기본 이동이 있는 거로 할지 -> 있어야됨
+        else // 기본 이동이 있는 거로 할지 -> 약간이라도 있어야됨 조작감 개같아짐 
         {
             Move();
-            if (moveCount <= 0 || !canDash) 
+            if (isDashing) 
             {
-                if (moveCount <= 0)
-                    Debug.Log("이동 횟수 전부 소모");
                 return;
             }
-            
+            if (moveCount <= 0)
+            {
+                Debug.Log("이동 횟수 전부 소모");
+                return;
+            }
+
             else
             {
-                Dash();
+                Dash(); // 맵 바깥으로 나가는 것 해결방안: 순간이동 -> 초고속이동으로 바꾸고 그동안 무적 주면 됨
             }
             if (attackCount <= 0)
             {
@@ -113,13 +116,15 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isKnockBacked) rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
+        if(!isKnockBacked && !isDashing) rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
+
     }
 
     public void TakeDamage(int damage)
     {
-        hp -= damage;
-        Debug.Log($"Player Hp : {hp}");
+        if (!isDashing)
+            hp -= damage;
+        // Debug.Log($"Player Hp : {hp}"); 어차피 체력 1이니까
 
         if (hp <= 0) 
         {
@@ -247,13 +252,20 @@ public class Player : MonoBehaviour
 
     IEnumerator DashActivate()
     {
-        canDash = false;
-        transform.position += moveDirection * teleportDistance / 2 * (chargeStack + 1); // 충전 횟수에 비례하여 돌진 거리 증가
+        isDashing = true;
+        // transform.position += moveDirection * teleportDistance * (chargeStack + 1);
+        rb.linearVelocity = Vector2.zero;
+        float Speed = teleportDistance * (chargeStack+1) / dashCooldown;
+        rb.AddForce(moveDirection * Speed * rb.mass, ForceMode2D.Impulse); // 충전 횟수에 비례하여 돌진 거리 증가. 초고속이동으로 변경
         chargeStack = 0;
-        Debug.Log("Move Stack: " + moveCount);
+
         moveCount--;
+        Debug.Log("Move Stack: " + moveCount);
+
         yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
+        rb.linearVelocity = Vector2.zero;
+        yield return new WaitForSeconds(dashCooldown);
+        isDashing = false;
     }
 
     public void OnHit(float knockbackRate, Vector2 knockbackDir, int effectId, float friction) // 넉백이랑 
@@ -270,7 +282,6 @@ public class Player : MonoBehaviour
 
     IEnumerator KnockBackOff()
     {
-
         while (rb.linearVelocity.magnitude - 1 > 0)
         {
             yield return null;
