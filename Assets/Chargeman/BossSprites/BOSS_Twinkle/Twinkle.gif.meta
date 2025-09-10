@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 1a5bbd3062050a94fa8db3a4b7fbd638
+guid: ead40a8f30c2444d68afebb867bc9839
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8720940090101655381
-    second: BOSS_IDLE_Sprite_0
-  - first:
-      213: 5137324627404662855
-    second: BOSS_IDLE_Sprite_1
-  - first:
-      213: -8600260427674367495
-    second: BOSS_IDLE_Sprite_2
-  - first:
-      213: -447641661540903814
-    second: BOSS_IDLE_Sprite_3
+      213: 1928114730294367124
+    second: Twinkle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,89 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BOSS_IDLE_Sprite_0
+      name: Twinkle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 88
-        height: 77
+        x: 219
+        y: 249
+        width: 32
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ba8170e813ff8f680800000000000000
-      internalID: -8720940090101655381
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BOSS_IDLE_Sprite_1
-      rect:
-        serializedVersion: 2
-        x: 87
-        y: 0
-        width: 88
-        height: 77
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7482258a7817b4740800000000000000
-      internalID: 5137324627404662855
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BOSS_IDLE_Sprite_2
-      rect:
-        serializedVersion: 2
-        x: 174
-        y: 0
-        width: 88
-        height: 77
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9f9ce9805bcb5a880800000000000000
-      internalID: -8600260427674367495
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BOSS_IDLE_Sprite_3
-      rect:
-        serializedVersion: 2
-        x: 261
-        y: 0
-        width: 88
-        height: 77
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a745031d748a9c9f0800000000000000
-      internalID: -447641661540903814
+      spriteID: 493d461b12a02ca10800000000000000
+      internalID: 1928114730294367124
       vertices: []
       indices: 
       edges: []
@@ -200,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 76d1bb8836ae143fabf1f2ae050109fe
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BOSS_IDLE_Sprite_0: -8720940090101655381
-      BOSS_IDLE_Sprite_1: 5137324627404662855
-      BOSS_IDLE_Sprite_2: -8600260427674367495
-      BOSS_IDLE_Sprite_3: -447641661540903814
+      Twinkle_0: 1928114730294367124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
