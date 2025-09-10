@@ -10,7 +10,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     private int _maxHp = 10;
     public int MaxHp { get { return _maxHp; } }
 
-    private int _patternNum = 0;
+    private int _patternNum = -1;
     private float _moveSpeed = 0;
     private float _damagedTimer = 0f;
     private float _xOffSet = -8.5f; // 좌측 하단 모서리 타일을 (1,1)으로 취급하도록 함
@@ -81,6 +81,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
             StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
             //StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 0.6f));
         }
+
+        _animator.SetInteger("patternNum", _patternNum);
     }
 
     public void TakeDamage(int damage)
@@ -105,6 +107,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
     private IEnumerator ScaleUsingPattern(int patternType, Vector3 startScale, Vector3 endScale, float delay)
     {
+        Debug.Log(_patternNum);
         float currentTime = 0;
 
         Transform size = warning[patternType].GetComponent<Transform>();
@@ -120,6 +123,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         attack.transform.localScale = endScale;
 
         _isDoing = false;
+        _patternNum = -1;
+        Debug.Log(_patternNum);
         yield break;
     }
 
