@@ -39,10 +39,13 @@ public class Player : MonoBehaviour
     public int chargeStack = 0;
     private int hp = 1;
 
-    // 행동 횟수 제한 변수: 일단 99990으로 통일함
-    private int moveCount = 99990;
-    private int attackCount = 99990;
-    private int chargeCount = 99990;
+    // 행동 횟수 제한 변수: 일단 9999로 통일함
+    private int moveCount = 9999;
+    private int attackCount = 9999;
+    private int chargeCount = 9999;
+    public int MoveCnt {  get { return moveCount; } }
+    public int AtkCnt {  get { return attackCount; } }
+    public int ChgCnt { get { return chargeCount; } }
 
     public int GetMaxCharge()
     {
