@@ -5,6 +5,7 @@ public class HpBar : MonoBehaviour
 {
     [SerializeField] private GameObject boss;
     [SerializeField] private GameObject bar;
+    [SerializeField] private Vector3 margin = new Vector3(0, 1, 0);
 
     private Transform tr;
     private IBoss bossScript;
@@ -22,7 +23,7 @@ public class HpBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        tr.position = Camera.main.WorldToScreenPoint(boss.transform.position + Vector3.up);
+        tr.position = Camera.main.WorldToScreenPoint(boss.transform.position + margin);
         barImage.fillAmount = (float)bossScript.Hp / bossScript.MaxHp;
     }
 }
