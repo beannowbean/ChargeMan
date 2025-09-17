@@ -173,8 +173,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         _isDoing = false;
         yield break;
     }
-
-    private IEnumerator Laser(Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
+    
+    private IEnumerator Laser( Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
     {
         float currentTime = 0;
         Transform tr = pattern[3].GetComponent<Transform>();
@@ -200,11 +200,5 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         StartCoroutine(ArcWarn(new Vector3(10, 10, 1f), 40, 40, 41, 140, 0.6f));
 
         yield break;
-    }
-
-    private IEnumerator MaceCrash()
-    {
-        ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(6f, 6f, 1f), 2);
-        yield break; 
     }
 }
