@@ -57,7 +57,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         {
             _isDoing = true;
             _patternNum = 0;
-            StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(6f, 6f, 1f), 2));
+            //StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(6f, 6f, 1f), 2));
+            StartCoroutine(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
         }
 
         if (Input.GetKeyDown(KeyCode.O) && _isDoing == false) // 직선
@@ -110,17 +111,20 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         Debug.Log(_patternNum);
         float currentTime = 0;
 
-        Transform size = warning[patternType].GetComponent<Transform>();
+        GameObject warningRange =  Instantiate(warning[patternType], this.transform.localPosition, Quaternion.identity);
+
+        Transform size = warningRange.GetComponent<Transform>();
         while (currentTime < delay)
         {
             currentTime += Time.deltaTime;
             size.localScale = Vector3.Lerp(startScale, endScale, currentTime / delay);
             yield return null;
         }
-        size.localScale = new Vector3(0f, 0f, 1f);
 
-        GameObject attack = Instantiate(pattern[patternType], this.transform);
-        attack.transform.localScale = endScale;
+        Destroy(warningRange);
+        /*
+        GameObject attack = Instantiate(pattern[patternType], this.transform.localPosition, Quaternion.identity);
+        attack.transform.localScale = endScale;*/
 
         _isDoing = false;
         _patternNum = -1;
@@ -142,11 +146,6 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
             yield return null;
         }
         size.localScale = new Vector3(0f, 0f, 1f);
-
-        GameObject attack = Instantiate(pattern[2], new Vector3(x + _xOffSet, y + _yOffset, 0f), Quaternion.identity);
-        attack.transform.localScale = endScale;
-
-        _isDoing = false;
         yield break;
     }
 
@@ -202,8 +201,17 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         yield break;
     }
 
-    private IEnumerator MaceCrash()
+    private IEnumerator MaceCrash(Vector3 startScale, Vector3 endScale, float delay)
     {
+        IEnumerator ie = ScaleUsingPattern(0, startScale, endScale, delay);
+        StartCoroutine(ie);
+
+        yield return new WaitForSeconds(delay);
+        
+        GameObject attack = Instantiate(pattern[0], this.transform.localPosition, Quaternion.identity);
+        attack.transform.localScale = endScale;
+
+        _isDoing = false;
         yield break;
     }
 }
