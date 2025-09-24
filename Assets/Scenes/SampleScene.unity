@@ -6432,7 +6432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1112314177}
-  _laserCooldownMax: 10
+  _cooldownMax: 5
   _damagedTime: 0.2
   _normalSprite: {fileID: 0}
   _damagedSprite: {fileID: 0}
@@ -6445,7 +6445,7 @@ MonoBehaviour:
   - {fileID: 4969410190243955118, guid: d0669b756824d4340b40f6baa0b01a34, type: 3}
   - {fileID: 4517310680735619818, guid: 631ca148114d4413999f070890471a3b, type: 3}
   - {fileID: 5117425458729715019, guid: 4be7363e6bc801f4b8ea31648199960c, type: 3}
-  - {fileID: 0}
+  - {fileID: 1471448037140222398, guid: df3548ee338fa45b0a97f89336c37f43, type: 3}
 --- !u!61 &1769167034
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -179,11 +179,12 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     private IEnumerator ArcWarn(Vector3 size, float startAngleLeft, float endAngleLeft, float startAngleRight, float endAngleRight, float delay)
     {
         float currentTime = 0;
-        warning[3].GetComponent<Transform>().localScale = size;
-        Shape.UserProps shape = warning[3].GetComponent<Shape>().settings;
+        GameObject warningRange = Instantiate(warning[3], this.transform.localPosition, Quaternion.identity);
+        warningRange.GetComponent<Transform>().localScale = size;
+        Shape.UserProps shape = warningRange.GetComponent<Shape>().settings;
 
         yield return new WaitForSeconds(0.3f);
-        warning[3].SetActive(true);
+        //warning[3].SetActive(true);
         while (currentTime < delay)
         {
             currentTime += Time.deltaTime;
@@ -194,8 +195,9 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
         shape.startAngle = 40;
         shape.endAngle = 41;
-        warning[3].SetActive(false);
+        //warning[3].SetActive(false);
 
+        Destroy(warningRange);
         _isDoing = false;
         yield break;
     }
@@ -203,14 +205,19 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     private IEnumerator Laser(Vector3 startRotation, Vector3 endRotation, float turnOnDelay, float turnOffDelay)
     {
         float currentTime = 0;
-        Transform tr = pattern[3].GetComponent<Transform>();
-        Animator ani = pattern[3].GetComponent<Animator>();
+        GameObject laser = Instantiate(pattern[3], this.transform.localPosition, Quaternion.identity);
+        Transform tr = laser.GetComponent<Transform>();
+        Animator ani = laser.GetComponent<Animator>();
         tr.localRotation = Quaternion.Euler(startRotation);
 
-        pattern[3].SetActive(true);
+        //pattern[3].SetActive(true);
         ani.SetBool("isActive", true);
 
         yield return new WaitForSeconds(turnOnDelay);
+
+        StartCoroutine(ArcWarn(new Vector3(10, 10, 1f), 40, 40, 41, 140, 0.6f));
+
+        yield return new WaitForSeconds(0.6f);
 
         while (currentTime < turnOffDelay)
         {
@@ -221,10 +228,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
         ani.SetBool("isActive", false);
 
-        pattern[3].SetActive(false);
-
-        StartCoroutine(ArcWarn(new Vector3(10, 10, 1f), 40, 40, 41, 140, 0.6f));
-
+        //pattern[3].SetActive(false);
+        Destroy(laser);
         _cooldown = _cooldownMax;
 
         yield break;
