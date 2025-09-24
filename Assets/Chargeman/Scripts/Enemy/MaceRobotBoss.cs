@@ -1,21 +1,21 @@
 using UnityEngine;
 using Shapes2D;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MaceRobotBoss : MonoBehaviour, IBoss
 {
+    [SerializeField] private GameObject _player;
+    private Transform _playerTransform;
+
     private int _hp = 10;
     public int Hp { get { return _hp; } set { _hp = value; } }
 
     private int _maxHp = 10;
     public int MaxHp { get { return _maxHp; } }
 
-    private float _maceCrashCooldown;
-    [SerializeField] private const float _maceCrashCooldownMax = 5f;
-    private float _shootCooldown;
-    [SerializeField] private const float _shootCooldownMax = 3f;
-    private float _laserCooldown;
-    [SerializeField] private float _laserCooldownMax = 10f;
+    private float _cooldown;
+    [SerializeField] private float _cooldownMax = 5f;
 
     private int _patternNum = -1;
     private float _moveSpeed = 0;
@@ -32,6 +32,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     [SerializeField] private Sprite _damagedSprite;
     [SerializeField] private GameObject[] warning;
     [SerializeField] private GameObject[] pattern;
+    
+    private List<IEnumerator> _patternList = new List<IEnumerator>();
 
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -41,12 +43,15 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
     void Awake()
     {
-        _maceCrashCooldown = _maceCrashCooldownMax;
-        _shootCooldown = _shootCooldownMax;
-        _laserCooldown = _laserCooldownMax;
+        _cooldown = _cooldownMax;
 
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _playerTransform = _player.GetComponent<Transform>();
+
+        _patternList.Add(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
+        _patternList.Add(Shoot());
+        _patternList.Add(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
     }
 
     // Update is called once per frame
@@ -95,6 +100,17 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         }
 
         _animator.SetInteger("patternNum", _patternNum);
+
+        _cooldown -= Time.deltaTime; //패턴 쿨타임 감소
+
+
+        //패턴 시전
+        //float distance = Vector3.Distance(_player.transform.localPosition, this.transform.localPosition);
+        if (_cooldown <= 0)
+        {
+            int type = Random.Range(0, 2);
+            StartCoroutine(_patternList[type]);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -209,11 +225,14 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
         StartCoroutine(ArcWarn(new Vector3(10, 10, 1f), 40, 40, 41, 140, 0.6f));
 
+        _cooldown = _cooldownMax;
+
         yield break;
     }
 
     private IEnumerator MaceCrash(Vector3 startScale, Vector3 endScale, float delay)
     {
+        Debug.Log("Crash");
         IEnumerator ie = ScaleUsingPattern(0, startScale, endScale, delay);
         StartCoroutine(ie);
 
@@ -223,11 +242,16 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         attack.transform.localScale = endScale;
 
         _isDoing = false;
+
+        _cooldown = _cooldownMax;
+
         yield break;
     }
 
     private IEnumerator Shoot()
     {
+        Debug.Log("Shoot");
+        _cooldown = _cooldownMax;
         yield break;
     }
 }

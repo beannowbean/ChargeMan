@@ -6431,6 +6431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f2e72bb603e3e4586a60a34f063b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 1112314177}
+  _laserCooldownMax: 10
   _damagedTime: 0.2
   _normalSprite: {fileID: 0}
   _damagedSprite: {fileID: 0}
