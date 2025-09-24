@@ -10,6 +10,13 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
     private int _maxHp = 10;
     public int MaxHp { get { return _maxHp; } }
 
+    private float _maceCrashCooldown;
+    [SerializeField] private const float _maceCrashCooldownMax = 5f;
+    private float _shootCooldown;
+    [SerializeField] private const float _shootCooldownMax = 3f;
+    private float _laserCooldown;
+    [SerializeField] private float _laserCooldownMax = 10f;
+
     private int _patternNum = -1;
     private float _moveSpeed = 0;
     private float _damagedTimer = 0f;
@@ -34,6 +41,10 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
     void Awake()
     {
+        _maceCrashCooldown = _maceCrashCooldownMax;
+        _shootCooldown = _shootCooldownMax;
+        _laserCooldown = _laserCooldownMax;
+
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -111,7 +122,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         Debug.Log(_patternNum);
         float currentTime = 0;
 
-        GameObject warningRange =  Instantiate(warning[patternType], this.transform.localPosition, Quaternion.identity);
+        GameObject warningRange = Instantiate(warning[patternType], this.transform.localPosition, Quaternion.identity);
 
         Transform size = warningRange.GetComponent<Transform>();
         while (currentTime < delay)
@@ -207,11 +218,16 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         StartCoroutine(ie);
 
         yield return new WaitForSeconds(delay);
-        
+
         GameObject attack = Instantiate(pattern[0], this.transform.localPosition, Quaternion.identity);
         attack.transform.localScale = endScale;
 
         _isDoing = false;
+        yield break;
+    }
+
+    private IEnumerator Shoot()
+    {
         yield break;
     }
 }
