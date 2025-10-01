@@ -6470,7 +6470,7 @@ GameObject:
   - component: {fileID: 1769167035}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6517,6 +6517,7 @@ MonoBehaviour:
   - {fileID: 4517310680735619818, guid: 631ca148114d4413999f070890471a3b, type: 3}
   - {fileID: 5117425458729715019, guid: 4be7363e6bc801f4b8ea31648199960c, type: 3}
   - {fileID: 1471448037140222398, guid: df3548ee338fa45b0a97f89336c37f43, type: 3}
+  - {fileID: 2520751166226829746, guid: d256c617474d82e49a91e3a78a90751d, type: 3}
 --- !u!61 &1769167034
 BoxCollider2D:
   m_ObjectHideFlags: 0

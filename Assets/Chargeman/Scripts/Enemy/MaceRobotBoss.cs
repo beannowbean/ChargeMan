@@ -50,7 +50,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         _playerTransform = _player.GetComponent<Transform>();
 
         _patternList.Add(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
-        _patternList.Add(Shoot());
+        _patternList.Add(Shoot(_playerTransform));
         _patternList.Add(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
     }
 
@@ -85,7 +85,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
                     StartCoroutine(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
                     break;
                 case 1:
-                    StartCoroutine(Shoot());
+                    StartCoroutine(Shoot(_playerTransform));
                     break;
                 case 2:
                     StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
@@ -234,9 +234,14 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         yield break;
     }
 
-    private IEnumerator Shoot()
+    private IEnumerator Shoot(Transform Target)
     {
         Debug.Log("Shoot");
+        GameObject Projectile = Instantiate(pattern[4], this.transform.localPosition, Quaternion.identity);
+        Projectile.GetComponent<SmallProjectileAttack>().SetTarget(Target);
+
+        _isDoing = false;
+
         _cooldown = _cooldownMax;
         yield break;
     }

@@ -4,7 +4,7 @@ public class SmallProjectileAttack : EnemyAttack
 {
     public float speed = 10;
 
-    public Vector2 dir = Vector2.right; // 기본방향 우측
+    public Vector2 dir = Vector2.left; // 기본방향 우측
 
 
     private Rigidbody2D rb;
@@ -20,7 +20,8 @@ public class SmallProjectileAttack : EnemyAttack
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)
-    {   
+    {
+        Debug.Log(collision.name);
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
@@ -30,5 +31,10 @@ public class SmallProjectileAttack : EnemyAttack
         Destroy(this.gameObject);
     }
 
-    
+    public void SetTarget(Transform target)
+    {
+        if (target == null) return;
+        dir = (target.position - transform.position).normalized;
+    }
+
 }

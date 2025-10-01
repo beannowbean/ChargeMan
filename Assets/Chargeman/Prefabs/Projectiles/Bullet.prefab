@@ -98,7 +98,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2520751166226829746}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -129,6 +129,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30cbef97f429e14d843f29f8e9ea295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  destroyTime: 1
+  knockbackRate: 0
+  knockbackDir: {x: 0, y: 0}
+  effectId: 0
+  friction: 0
+  speed: 10
+  dir: {x: 1, y: 0}
 --- !u!70 &6096183229926441038
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
