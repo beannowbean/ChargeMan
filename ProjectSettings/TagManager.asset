@@ -45,17 +45,20 @@ TagManager:
   - name: Background
     uniqueID: 3079343615
     locked: 0
-  - name: Player
-    uniqueID: 2544893723
-    locked: 0
   - name: Warning
     uniqueID: 1045319601
     locked: 0
   - name: Pattern
     uniqueID: 759860205
     locked: 0
+  - name: PlayerBack
+    uniqueID: 2544893723
+    locked: 0
   - name: Enemy
     uniqueID: 2552585567
+    locked: 0
+  - name: PlayerFront
+    uniqueID: 3615304565
     locked: 0
   - name: UI
     uniqueID: 2799493529

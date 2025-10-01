@@ -68,48 +68,29 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
             }
         }
 
-        //패턴 테스트
-        if (Input.GetKeyDown(KeyCode.P) && _isDoing == false) // 원형
-        {
-            _isDoing = true;
-            _patternNum = 0;
-            //StartCoroutine(ScaleUsingPattern(0, new Vector3(0f, 0f, 1f), new Vector3(6f, 6f, 1f), 2));
-            StartCoroutine(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
-        }
-
-        if (Input.GetKeyDown(KeyCode.O) && _isDoing == false) // 직선
-        {
-            _isDoing = true;
-            _patternNum = 1;
-            StartCoroutine(ScaleUsingPattern(1, new Vector3(0f, 1f, 1f), new Vector3(1f, 1f, 1f), 1));
-        }
-
-        if (Input.GetKeyDown(KeyCode.I) && _isDoing == false) // 좌표
-        {
-            _isDoing = true;
-            _patternNum = 2;
-            StartCoroutine(PointWarn(8, 5, new Vector3(0f, 0f, 1f), new Vector3(1f, 1f, 1f), 0.5f));
-        }
-
-        if (Input.GetKeyDown(KeyCode.U) && _isDoing == false)
-        {
-            _isDoing = true;
-            _patternNum = 3;
-            StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
-            //StartCoroutine(ArcWarn(new Vector3(xSize, ySize, 1f), 40, 40, 41, 140, 0.6f));
-        }
-
         _animator.SetInteger("patternNum", _patternNum);
 
         _cooldown -= Time.deltaTime; //패턴 쿨타임 감소
-
+        //Debug.Log(_cooldown);
 
         //패턴 시전
         //float distance = Vector3.Distance(_player.transform.localPosition, this.transform.localPosition);
         if (_cooldown <= 0)
         {
             int type = Random.Range(0, 2);
-            StartCoroutine(_patternList[type]);
+            //StartCoroutine(_patternList[type]);
+            switch (type)
+            {
+                case 0:
+                    StartCoroutine(MaceCrash(new Vector3(0f, 0f, 1f), new Vector3(4f, 3f, 1f), 2f));
+                    break;
+                case 1:
+                    StartCoroutine(Shoot());
+                    break;
+                case 2:
+                    StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
+                    break;
+            }
         }
     }
 
@@ -153,7 +134,6 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         GameObject attack = Instantiate(pattern[patternType], this.transform.localPosition, Quaternion.identity);
         attack.transform.localScale = endScale;*/
 
-        _isDoing = false;
         _patternNum = -1;
         Debug.Log(_patternNum);
         yield break;
@@ -178,6 +158,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
     private IEnumerator ArcWarn(Vector3 size, float startAngleLeft, float endAngleLeft, float startAngleRight, float endAngleRight, float delay)
     {
+        Debug.Log("Laser");
         float currentTime = 0;
         GameObject warningRange = Instantiate(warning[3], this.transform.localPosition, Quaternion.identity);
         warningRange.GetComponent<Transform>().localScale = size;
@@ -198,7 +179,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         //warning[3].SetActive(false);
 
         Destroy(warningRange);
-        _isDoing = false;
+        //_isDoing = false;
         yield break;
     }
 
@@ -213,9 +194,9 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         //pattern[3].SetActive(true);
         ani.SetBool("isActive", true);
 
-        yield return new WaitForSeconds(turnOnDelay);
-
         StartCoroutine(ArcWarn(new Vector3(10, 10, 1f), 40, 40, 41, 140, 0.6f));
+
+        yield return new WaitForSeconds(turnOnDelay);
 
         yield return new WaitForSeconds(0.6f);
 

@@ -19,13 +19,13 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public float moveSpeed = 0.5f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    
+
     // 대시 관련
     public Vector3 moveDirection = Vector3.zero;
     bool isDashing = false;
@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
     private int moveCount = 9999;
     private int attackCount = 9999;
     private int chargeCount = 9999;
-    public int MoveCnt {  get { return moveCount; } }
-    public int AtkCnt {  get { return attackCount; } }
+    public int MoveCnt { get { return moveCount; } }
+    public int AtkCnt { get { return attackCount; } }
     public int ChgCnt { get { return chargeCount; } }
 
     public int GetMaxCharge()
@@ -52,9 +52,11 @@ public class Player : MonoBehaviour
         return chargeCount;
     }
 
+    [SerializeField] private Transform bossTr;
+
 
     // 테스트 여부 
-    public bool isTesting  = true;
+    public bool isTesting = true;
 
     private bool isKnockBacked = false;
     private void Update()
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
         else // 기본 이동이 있는 거로 할지 -> 약간이라도 있어야됨 조작감 개같아짐 
         {
             Move();
-            if (isDashing) 
+            if (isDashing)
             {
                 return;
             }
@@ -107,8 +109,10 @@ public class Player : MonoBehaviour
             {
                 Charge();
             }
+
+            SetSortingLayer();
         }
-        
+
     }
 
     private void OnDrawGizmos()
@@ -119,7 +123,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isKnockBacked && !isDashing) rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
+        if (!isKnockBacked && !isDashing) rb.MovePosition(rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime);
 
     }
 
@@ -129,7 +133,7 @@ public class Player : MonoBehaviour
             hp -= damage;
         // Debug.Log($"Player Hp : {hp}"); 어차피 체력 1이니까
 
-        if (hp <= 0) 
+        if (hp <= 0)
         {
             Debug.Log("Player Die");
             // isGameOver변수 
@@ -192,7 +196,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
                 StartCoroutine(DashActivate());
         }
-        
+
     }
 
     private void Attack() // Player Attack 플레이어 공격
@@ -204,7 +208,7 @@ public class Player : MonoBehaviour
             {
 
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-                
+
                 foreach (Collider2D collider in collider2Ds)
                 {
                     IBoss boss = collider.GetComponent<IBoss>(); // BOSS 스크립트 찾기
@@ -220,7 +224,7 @@ public class Player : MonoBehaviour
                     {
                         if (boss != null)
                         {
-                            boss.TakeDamage(1+chargeStack); 
+                            boss.TakeDamage(1 + chargeStack);
                         }
                         chargeStack = 0;
                         attackCount--;
@@ -229,7 +233,7 @@ public class Player : MonoBehaviour
                 }
                 animator.SetTrigger("isAttack");
                 curTime = coolTime;
-                
+
                 Debug.Log("Charge Stack: " + chargeStack);
             }
 
@@ -258,7 +262,7 @@ public class Player : MonoBehaviour
         isDashing = true;
         // transform.position += moveDirection * teleportDistance * (chargeStack + 1);
         rb.linearVelocity = Vector2.zero;
-        float Speed = teleportDistance * (chargeStack+1) / dashCooldown;
+        float Speed = teleportDistance * (chargeStack + 1) / dashCooldown;
         rb.AddForce(moveDirection * Speed * rb.mass, ForceMode2D.Impulse); // 충전 횟수에 비례하여 돌진 거리 증가. 초고속이동으로 변경
         chargeStack = 0;
 
@@ -291,5 +295,10 @@ public class Player : MonoBehaviour
         }
         isKnockBacked = false;
     }
-    
+
+    private void SetSortingLayer()
+    {
+        if (this.transform.position.y > bossTr.position.y - 0.5) spriteRenderer.sortingLayerName = "PlayerBack";
+        else spriteRenderer.sortingLayerName = "PlayerFront";
+    }    
 }
