@@ -28,13 +28,14 @@ public class SmallProjectileAttack : EnemyAttack
             player.OnHit(0,new Vector2(0,0),0,0); // 지금은 매개변수에 다 0넣었지만 나중에는 아예 매개변수 없는 함수도 만들거임!! (Test.cs 가면 대충 확인가능함)
             player.TakeDamage(damage); 
         }
-        Destroy(this.gameObject);
+        if(collision.tag != "Enemy") // 쌩 비교라 나중에 고치긴 해야할듯
+            Destroy(this.gameObject);
     }
 
-    public void SetTarget(Transform target)
+    public void SetTarget(Vector3 target)
     {
         if (target == null) return;
-        dir = (target.position - transform.position).normalized;
+        dir = (target - transform.position).normalized;
     }
 
 }

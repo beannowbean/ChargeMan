@@ -1,7 +1,8 @@
-using UnityEngine;
 using Shapes2D;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MaceRobotBoss : MonoBehaviour, IBoss
 {
@@ -91,6 +92,11 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
                     StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
                     break;
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(MachineGun(_playerTransform, 2.25f, 15, 0.1f));
         }
     }
 
@@ -234,15 +240,33 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         yield break;
     }
 
-    private IEnumerator Shoot(Transform Target)
+    private IEnumerator Shoot(Transform target)
     {
         Debug.Log("Shoot");
-        GameObject Projectile = Instantiate(pattern[4], this.transform.localPosition, Quaternion.identity);
-        Projectile.GetComponent<SmallProjectileAttack>().SetTarget(Target);
+        SingleShot(target.position);
 
         _isDoing = false;
 
         _cooldown = _cooldownMax;
         yield break;
+    }
+
+    private IEnumerator MachineGun(Transform Target, float bias, int number, float fireRate) 
+    {
+        for (int i = 0; i < number; i++)
+        {
+            Vector3 target = Target.position;
+            target.x += Random.Range(-bias, bias);
+            target.y += Random.Range(-bias, bias);
+            SingleShot(target);
+
+            yield return new WaitForSeconds(fireRate);
+        }
+    }
+
+    private void SingleShot(Vector3 target)
+    {
+        GameObject Projectile = Instantiate(pattern[4], this.transform.localPosition, Quaternion.identity);
+        Projectile.GetComponent<SmallProjectileAttack>().SetTarget(target);
     }
 }
