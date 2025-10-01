@@ -75,9 +75,9 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
         //패턴 시전
         //float distance = Vector3.Distance(_player.transform.localPosition, this.transform.localPosition);
-        if (_cooldown <= 0)
+        if (_cooldown <= 0 && !_isDoing)
         {
-            int type = Random.Range(0, 2);
+            int type = Random.Range(0, 3);
             //StartCoroutine(_patternList[type]);
             switch (type)
             {
@@ -91,6 +91,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
                     StartCoroutine(Laser(new Vector3(0f, 0f, -50f), new Vector3(0f, 0f, 50f), 0.9f, 0.5f));
                     break;
             }
+
+            _isDoing = true;
         }
     }
 
@@ -116,7 +118,6 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
 
     private IEnumerator ScaleUsingPattern(int patternType, Vector3 startScale, Vector3 endScale, float delay)
     {
-        Debug.Log(_patternNum);
         float currentTime = 0;
 
         GameObject warningRange = Instantiate(warning[patternType], this.transform.localPosition, Quaternion.identity);
@@ -133,9 +134,6 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         /*
         GameObject attack = Instantiate(pattern[patternType], this.transform.localPosition, Quaternion.identity);
         attack.transform.localScale = endScale;*/
-
-        _patternNum = -1;
-        Debug.Log(_patternNum);
         yield break;
     }
 
@@ -179,7 +177,7 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         //warning[3].SetActive(false);
 
         Destroy(warningRange);
-        //_isDoing = false;
+        _isDoing = false;
         yield break;
     }
 
@@ -212,6 +210,8 @@ public class MaceRobotBoss : MonoBehaviour, IBoss
         //pattern[3].SetActive(false);
         Destroy(laser);
         _cooldown = _cooldownMax;
+
+        _isDoing = false;
 
         yield break;
     }
