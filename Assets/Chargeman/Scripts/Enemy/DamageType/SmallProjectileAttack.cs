@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SmallProjectileAttack : EnemyAttack
 {
-    public float speed = 10;
+    public float speed = 7;
 
     public Vector2 dir = Vector2.left; // 기본방향 우측
 
