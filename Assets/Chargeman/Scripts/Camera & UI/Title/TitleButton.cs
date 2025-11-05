@@ -5,13 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TitleButton : MonoBehaviour
 {
-    public void ChangeToPlayScene()
-    {
-        SceneManager.LoadScene("Boss1");
-    }
-
     public void ChangeToSelectScene()
     {
+        Debug.Log("¹öÆ° Å¬¸¯µÊ");
         SceneManager.LoadScene("StageSelect");
     }
 }
